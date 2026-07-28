@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>
+Network Monitoring Dashboard
+</title>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<link rel="stylesheet" href="/static/style.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+<div class="header">
+
+
+<h2>
+🌐 Network Monitoring Dashboard
+</h2>
+
+
+
+<a href="/logout">
+
+<button class="logout">
+Logout
+</button>
+
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="container">
+
+
+
+
+
+<!-- ALERT BOX -->
+
+<div id="alertBox"></div>
+
+
+
+
+
+
+
+
+<!-- SYSTEM MONITOR CARDS -->
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h3>
+CPU Usage
+</h3>
+
+<h1 id="cpu">
+0 %
+</h1>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+RAM Usage
+</h3>
+
+<h1 id="ram">
+0 %
+</h1>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Download Speed
+</h3>
+
+<h2 id="download">
+0 KB/s
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Upload Speed
+</h3>
+
+<h2 id="upload">
+0 KB/s
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+System Health
+</h3>
+
+<h2 id="health">
+Normal
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Internet Status
+</h3>
+
+<h2 id="internet">
+Checking...
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Ping
+</h3>
+
+<h2 id="ping">
+0 ms
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Network Quality
+</h3>
+
+<h2 id="quality">
+-
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+IP Address
+</h3>
+
+<p id="ip">
+-
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Computer Name
+</h3>
+
+<p id="computer">
+-
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Operating System
+</h3>
+
+<p id="os">
+-
+</p>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Total RAM
+</h3>
+
+<p id="totalram">
+-
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- NETWORK INTERFACE -->
+
+
+<h2>
+🌐 Network Interface Details
+</h2>
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h3>
+Interface
+</h3>
+
+<h2 id="interfaceName">
+-
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+IP Address
+</h3>
+
+<h2 id="interfaceIP">
+-
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+MAC Address
+</h3>
+
+<h2 id="interfaceMAC">
+-
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Speed
+</h3>
+
+<h2 id="interfaceSpeed">
+-
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Status
+</h3>
+
+<h2 id="interfaceStatus">
+-
+</h2>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- BANDWIDTH MONITOR -->
+
+
+<h2>
+📡 Real-Time Bandwidth Monitor
+</h2>
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h3>
+Download Speed
+</h3>
+
+<h2 id="bandDownload">
+0 KB/s
+</h2>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>
+Upload Speed
+</h3>
+
+<h2 id="bandUpload">
+0 KB/s
+</h2>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h3>
+Network Status
+</h3>
+
+<h2 id="bandStatus">
+Normal
+</h2>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CPU RAM GRAPH -->
+
+
+<h2>
+📊 CPU & RAM History
+</h2>
+
+
+
+<canvas id="usageChart"></canvas>
+
+
+
+
+
+
+
+<!-- NETWORK SPEED GRAPH -->
+
+
+<h2>
+📈 Network Speed History
+</h2>
+
+
+
+<canvas id="networkChart"></canvas>
+
+
+
+
+
+
+
+
+
+<!-- TRAFFIC ANALYZER -->
+
+
+<h2>
+📡 Network Traffic Analyzer
+</h2>
+
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h3>
+Data Sent
+</h3>
+
+<h2 id="sentData">
+0 MB
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Data Received
+</h3>
+
+<h2 id="receivedData">
+0 MB
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Packets Sent
+</h3>
+
+<h2 id="sentPackets">
+0
+</h2>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+Packets Received
+</h3>
+
+<h2 id="receivedPackets">
+0
+</h2>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- TRAFFIC GRAPH -->
+
+
+<h2>
+📊 Traffic History
+</h2>
+
+
+<canvas id="trafficChart"></canvas>
+
+
+
+
+
+<!-- DEVICE SCANNER -->
+
+
+<h2>
+🔍 Connected Network Devices
+</h2>
+
+
+
+<button onclick="scanNetwork()">
+
+Scan Network
+
+</button>
+
+
+
+<br><br>
+
+
+
+<table id="deviceTable" border="1" width="100%">
+
+
+<tr>
+
+<th>
+IP Address
+</th>
+
+
+<th>
+MAC Address
+</th>
+
+
+<th>
+Status
+</th>
+
+
+</tr>
+
+
+</table>
+
+
+
+
+
+
+
+
+
+
+<!-- PORT SCANNER -->
+
+
+<h2>
+🔎 Port Scanner
+</h2>
+
+
+
+<div class="card">
+
+
+<input 
+type="text"
+id="scanIP"
+value="192.168.20.1"
+>
+
+
+
+<button onclick="scanPorts()">
+
+Scan Ports
+
+</button>
+
+
+
+
+<table border="1" width="100%">
+
+
+<tr>
+
+<th>
+Port
+</th>
+
+
+<th>
+Status
+</th>
+
+
+</tr>
+
+
+
+<tbody id="portTable">
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- SECURITY MONITORING -->
+
+
+<h2>
+🔐 Security Monitoring
+</h2>
+
+
+
+<div class="card">
+
+
+
+<button onclick="checkSecurity()">
+
+Check Security
+
+</button>
+
+
+
+
+<h3 id="securityStatus">
+
+Not Checked
+
+</h3>
+
+
+
+
+
+<table border="1" width="100%">
+
+
+
+<tr>
+
+
+<th>
+Port
+</th>
+
+
+<th>
+Service
+</th>
+
+
+<th>
+Risk
+</th>
+
+
+
+</tr>
+
+
+
+
+
+<tbody id="securityTable">
+
+
+</tbody>
+
+
+
+</table>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- SECURITY LOGS -->
+
+
+<h2>
+📋 Security Logs
+</h2>
+
+
+
+<div class="card">
+
+
+<button onclick="loadSecurityLogs()">
+
+Refresh Logs
+
+</button>
+
+
+
+
+<table border="1" width="100%">
+
+
+
+<tr>
+
+
+<th>
+Time
+</th>
+
+
+<th>
+Event
+</th>
+
+
+<th>
+Risk
+</th>
+
+
+
+</tr>
+
+
+
+
+
+<tbody id="securityLogs">
+
+
+</tbody>
+
+
+
+
+</table>
+
+
+
+</div>
+<script>
+
+
+// ================= CPU RAM CHART =================
+
+
+let usageChart = new Chart(
+document.getElementById("usageChart"),
+{
+
+type:"line",
+
+data:{
+
+labels:[],
+
+datasets:[
+
+{
+label:"CPU %",
+data:[]
+},
+
+{
+label:"RAM %",
+data:[]
+}
+
+]
+
+}
+
+});
+
+
+
+
+
+
+// ================= NETWORK SPEED CHART =================
+
+
+let networkChart = new Chart(
+document.getElementById("networkChart"),
+{
+
+type:"line",
+
+data:{
+
+labels:[],
+
+datasets:[
+
+{
+label:"Download KB/s",
+data:[]
+},
+
+
+{
+label:"Upload KB/s",
+data:[]
+}
+
+]
+
+}
+
+});
+
+
+
+
+
+
+
+
+// ================= TRAFFIC CHART =================
+
+
+let trafficChart = new Chart(
+document.getElementById("trafficChart"),
+{
+
+type:"line",
+
+data:{
+
+labels:[],
+
+datasets:[
+
+
+{
+label:"Sent MB",
+data:[]
+},
+
+
+{
+label:"Received MB",
+data:[]
+}
+
+
+]
+
+}
+
+});
+
+
+
+
+
+
+
+
+
+// ================= LIVE DATA =================
+
+
+function updateData(){
+
+
+fetch("/data")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+cpu.innerHTML=data.cpu+" %";
+
+ram.innerHTML=data.ram+" %";
+
+
+download.innerHTML=data.download+" KB/s";
+
+
+upload.innerHTML=data.upload+" KB/s";
+
+
+health.innerHTML=data.health;
+
+
+internet.innerHTML=data.internet;
+
+
+ping.innerHTML=data.ping+" ms";
+
+
+ip.innerHTML=data.ip;
+
+
+computer.innerHTML=data.computer;
+
+
+os.innerHTML=data.os;
+
+
+totalram.innerHTML=data.total_ram+" GB";
+
+
+
+let quality="Excellent";
+
+
+if(data.ping>100)
+
+quality="Good";
+
+
+if(data.ping>300)
+
+quality="Poor";
+
+
+
+document.getElementById("quality").innerHTML=quality;
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= HISTORY =================
+
+
+function loadHistory(){
+
+
+fetch("/history")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+usageChart.data.labels=[];
+
+networkChart.data.labels=[];
+
+
+
+usageChart.data.datasets[0].data=[];
+
+usageChart.data.datasets[1].data=[];
+
+
+networkChart.data.datasets[0].data=[];
+
+networkChart.data.datasets[1].data=[];
+
+
+
+
+data.forEach(row=>{
+
+
+usageChart.data.labels.push(row[0]);
+
+
+usageChart.data.datasets[0].data.push(row[1]);
+
+
+usageChart.data.datasets[1].data.push(row[2]);
+
+
+
+networkChart.data.labels.push(row[0]);
+
+
+networkChart.data.datasets[0].data.push(row[3]);
+
+
+networkChart.data.datasets[1].data.push(row[4]);
+
+
+
+});
+
+
+
+usageChart.update();
+
+networkChart.update();
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// ================= INTERFACE =================
+
+
+function loadInterface(){
+
+
+fetch("/interface")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+if(data.length>0){
+
+
+let net=data[0];
+
+
+interfaceName.innerHTML=net.interface;
+
+interfaceIP.innerHTML=net.ip;
+
+interfaceMAC.innerHTML=net.mac;
+
+interfaceSpeed.innerHTML=net.speed+" Mbps";
+
+interfaceStatus.innerHTML=net.status;
+
+
+}
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// ================= BANDWIDTH =================
+
+
+function loadBandwidth(){
+
+
+fetch("/bandwidth")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+bandDownload.innerHTML=
+data.download+" KB/s";
+
+
+bandUpload.innerHTML=
+data.upload+" KB/s";
+
+
+bandStatus.innerHTML=
+data.status;
+
+
+
+if(data.status=="High Usage"){
+
+
+alertBox.innerHTML=
+"⚠️ High bandwidth usage detected";
+
+
+}
+
+else{
+
+
+alertBox.innerHTML="";
+
+
+}
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= TRAFFIC =================
+
+
+function loadTraffic(){
+
+
+fetch("/traffic")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+sentData.innerHTML=
+data.bytes_sent+" MB";
+
+
+receivedData.innerHTML=
+data.bytes_received+" MB";
+
+
+sentPackets.innerHTML=
+data.packets_sent;
+
+
+receivedPackets.innerHTML=
+data.packets_received;
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= DEVICE SCAN =================
+
+
+function scanNetwork(){
+
+
+fetch("/scan")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+let table=deviceTable;
+
+
+table.innerHTML=
+
+`
+<tr>
+
+<th>IP Address</th>
+
+<th>MAC Address</th>
+
+<th>Status</th>
+
+</tr>
+`;
+
+
+
+data.forEach(device=>{
+
+
+let row=table.insertRow();
+
+
+row.insertCell(0).innerHTML=device.ip;
+
+
+row.insertCell(1).innerHTML=device.mac;
+
+
+row.insertCell(2).innerHTML=device.status;
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= PORT SCAN =================
+
+
+function scanPorts(){
+
+
+let ip=document.getElementById("scanIP").value;
+
+
+
+fetch("/ports?ip="+ip)
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+portTable.innerHTML="";
+
+
+data.ports.forEach(item=>{
+
+
+let row=portTable.insertRow();
+
+
+row.insertCell(0).innerHTML=item.port;
+
+
+row.insertCell(1).innerHTML=item.status;
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= SECURITY =================
+
+
+function checkSecurity(){
+
+
+fetch("/security")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+securityStatus.innerHTML=data.status;
+
+
+securityTable.innerHTML="";
+
+
+
+data.alerts.forEach(alert=>{
+
+
+if(alert.port){
+
+
+let row=securityTable.insertRow();
+
+
+row.insertCell(0).innerHTML=alert.port;
+
+
+row.insertCell(1).innerHTML=alert.service;
+
+
+row.insertCell(2).innerHTML=alert.risk;
+
+
+}
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================= SECURITY LOGS =================
+
+
+function loadSecurityLogs(){
+
+
+fetch("/security_logs")
+
+.then(response=>response.json())
+
+.then(data=>{
+
+
+securityLogs.innerHTML="";
+
+
+
+data.forEach(log=>{
+
+
+let row=securityLogs.insertRow();
+
+
+row.insertCell(0).innerHTML=log[0];
+
+row.insertCell(1).innerHTML=log[1];
+
+row.insertCell(2).innerHTML=log[2];
+
+
+});
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// AUTO UPDATE
+
+
+setInterval(updateData,2000);
+
+
+setInterval(loadHistory,5000);
+
+
+setInterval(loadInterface,5000);
+
+
+setInterval(loadTraffic,5000);
+
+
+setInterval(loadBandwidth,3000);
+
+
+
+updateData();
+
+loadHistory();
+
+loadInterface();
+
+loadTraffic();
+
+loadBandwidth();
+
+
+</script>
+
+
+
+</div>
+
+
+</body>
+
+
+</html>
